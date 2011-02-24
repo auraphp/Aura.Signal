@@ -165,13 +165,13 @@ If that specific object instance sends the `example_signal` then the handler wil
         }
     }
 
-When you instantiate `ExampleAnotherChild` and call `action()`, the code will:
+When you instantiate `ExampleAnotherChild` and call `action()`, the code:
 
-1. Send a `'preAction'` signal to the `Manager`, which will in turn call the `preAction()` method on the object
+1. Sends a `'preAction'` signal to the `Manager`, which in turn calls the `preAction()` method on the object
 
-2. Call the `doSomething()` method on the object (n.b., remember that the `doSomething()` method sends an `'example_signal'` of its own to the `Manager`)
+2. Calls the `doSomething()` method on the object (n.b., remember that the `doSomething()` method sends an `'example_signal'` of its own to the `Manager`)
 
-3. Send a `'postAction'` signal to the `Manager`, which will in turn call the `postAction()` method on the object.
+3. Sends a `'postAction'` signal to the `Manager`, which in turn calls the `postAction()` method on the object.
 
 If there are class-based handlers for `ExampleAnotherChild` class or its parents, those will also be executed.  This means you can set up combinations of handlers to be applied to classes overall along with handlers that are tied to specific objects.
 
