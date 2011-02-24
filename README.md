@@ -1,7 +1,7 @@
 Introduction
 ============
 
-The Aura Signal package is a SignalSlots / EventHandler implementation for PHP 5.3+.  It allows you to invoke handlers ("slots" or "hooks") whenever a class or object sends a signal (or "event") to the signal manager.
+The Aura Signal package is a SignalSlots / EventHandler implementation for PHP 5.3+.  It allows you to invoke handlers ("slots" or "hooks") whenever a class or object sends a signal ("notification" or "event") to the signal manager.
 
 
 Basic Usage
