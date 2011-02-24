@@ -1,7 +1,8 @@
 Introduction
 ============
 
-The Aura Signal package is a SignalSlots implementation for PHP 5.3+.  It allows you to invoke handlers whenever a class or object sends a signal to the signal manager (a.k.a. "hooks").
+The Aura Signal package is a SignalSlots / EventHandler implementation for PHP 5.3+.  It allows you to invoke handlers ("slots" or "hooks") whenever a class or object sends a signal (or "event") to the signal manager.
+
 
 Basic Usage
 ===========
@@ -9,7 +10,7 @@ Basic Usage
 Instantiating the Signal Manager
 --------------------------------
 
-First, instantiate the signal `Manager` class. The easiest way to do this is to call the `scripts\instance.php` script.
+First, instantiate the signal `Manager` class. The easiest way to do this is to call the `aura.signal/scripts/instance.php` script.
 
     <?php
     $signal = require '/path/to/aura.signal/scripts/instance.php';
