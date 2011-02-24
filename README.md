@@ -36,7 +36,7 @@ Before we can send a signal to the `Manager`, we will need to add a handler for 
 
 3. A closure or callback to handle the signal.
 
-For example, to add a handler that will be executed every time a class of `vendor\package\Example` sends a signal called 'example_signal':
+For example, to add a closure that will be executed every time a object of the class `vendor\package\Example` sends a signal called `'example_signal'`:
 
     <?php
     $signal->handler(
