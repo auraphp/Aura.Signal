@@ -15,7 +15,7 @@ First, instantiate the signal `Manager` class. The easiest way to do this is to 
     <?php
     $signal = require '/path/to/aura.signal/scripts/instance.php';
 
-Alternatively, you can register the `aura.di/src` directory with your autoloader and instantiate it yourself:
+Alternatively, you can register the `aura.signal/src` directory with your autoloader and instantiate it yourself:
 
     <?php
     use aura\signal\Manager;
