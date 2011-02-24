@@ -24,8 +24,6 @@ Alternatively, you can register the `aura.signal/src` directory with your autolo
     use aura\signal\ResultCollection;
     return new Manager(new HandlerFactory, new ResultFactory, new ResultCollection);
 
-You will never need to use any of the support objects yourself; they are needed only by the `Manager`.
-
 
 Adding Signal Handlers
 ----------------------
