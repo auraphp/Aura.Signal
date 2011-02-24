@@ -185,23 +185,23 @@ Advanced Usage
 Handler Position Groups
 ----------------------
 
-(coming soon)
+(implemented; documentation coming soon)
 
 
 Result Inspection
 -----------------
 
-(coming soon)
+(implemented; documentation coming soon)
 
 
 Stopping Signal Processing
 --------------------------
 
-(coming soon)
+(implemented; documentation coming soon)
 
 
 Setting Handlers at Construction
 --------------------------------
 
-(coming soon)
+(implemented; documentation coming soon)
 
