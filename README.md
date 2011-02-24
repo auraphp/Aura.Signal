@@ -49,7 +49,7 @@ For example, to add a closure that will be executed every time a object of the c
 Signals By Class
 ----------------  
 
-To send a signal, the sending class must have an instance of the `Manager`.  The class should call the `send` method with the originating object (itself), the signal being sent, and arguments to pass to the signal handler.
+To send a signal, the sending class must have an instance of the `Manager`.  The class should call the `send()` method with the originating object (itself), the signal being sent, and arguments to pass to the signal handler.
 
 For example, we will define the `vendor\package\Example` class, and have it send a signal to the `Manager`. 
 
