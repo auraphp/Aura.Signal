@@ -30,7 +30,7 @@ You will never need to use any of the support objects yourself; they are needed 
 Adding Signal Handlers
 ----------------------
 
-Before we can send a signal to the manager, we will need to add a handler for it.  To add a handler, specify:
+Before we can send a signal to the `Manager`, we will need to add a handler for it.  To add a handler, specify:
 
 1. The class you expect to be sending the signal.  This can be `'*'` for "any class", or a fully-qualified class name.
 
@@ -53,7 +53,7 @@ Signals By Class
 
 To send a signal, the sending class must have an instance of the `Manager`.  The class should call the `send` method with the originating object (itself), the signal being sent, and arguments to pass to the signal handler.
 
-For example, we will define the `vendor\package\Example` class, and have it send a signal to the manager. 
+For example, we will define the `vendor\package\Example` class, and have it send a signal to the `Manager`. 
 
     <?php
     namespace vendor\package;
@@ -81,7 +81,7 @@ Now whenever we call the `doSomething()` method, it will send the `'example_sign
 Signal Inheritance
 ------------------
 
-If a class sends a signal, and no handler has been set for it, then the manager will do nothing.  However, if a handler has been set for a parent class, and one of its child classes sends a signal handled for the parent, the `Manager` will handle that signal for the child as well.
+If a class sends a signal, and no handler has been set for it, then the `Manager` will do nothing.  However, if a handler has been set for a parent class, and one of its child classes sends a signal handled for the parent, the `Manager` will handle that signal for the child as well.
 
 For example, if we have these two classes, and call `doSomethingElse()` on each of them ...
 
@@ -171,7 +171,7 @@ When you instantiate `ExampleAnotherChild` and call `action()`, the code will:
 
 1. Send a `'preAction'` signal to the `Manager`, which will in turn call the `preAction()` method on the object
 
-2. Call the `doSomething()` method on the object (n.b., remember that the `doSomething()` method sends an `'example_signal'` of its own to the manager)
+2. Call the `doSomething()` method on the object (n.b., remember that the `doSomething()` method sends an `'example_signal'` of its own to the `Manager`)
 
 3. Send a `'postAction'` signal to the `Manager`, which will in turn call the `postAction()` method on the object.
 
