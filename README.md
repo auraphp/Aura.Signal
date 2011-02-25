@@ -289,33 +289,23 @@ Given this file at `/path/to/signal_handlers.php` ...
 
     <?php
     return array(
-        // first handler
+        // first handler, with a closure
         array(
-            // sender
             'vendor\package\Example',
-            // signal
             'mock_signal',
-            // callback
             function() { return 'foo'; },
         ),
-        // second handler
+        // second handler, with a static callback
         array(
-            // sender
             'vendor\package\Example',
-            // signal
             'mock_signal',
-            // callback
-            function() { return 'bar'; },
+            array('vendor\package\SomeClass', 'someMethod'),
         ),
-        // third handler
+        // third handler, with a closure and position
         array(
-            // sender
             'vendor\package\Example',
-            // signal
             'mock_signal',
-            // callback
             function() { return 'baz'; },
-            // position
             1000,
         ),
     );
