@@ -206,7 +206,7 @@ After a signal has been sent, we can review the results returned by every handle
 
     <?php
     // send a signal and retain the results from each Handler
-    $results = $signal->send($this, 'example_signal');
+    $results = $this->signal->send($this, 'example_signal');
     
     // go through each result ...
     foreach ($results as $result) {
@@ -229,7 +229,7 @@ If you need only the last result, you can call `getLast()` on the `ResultCollect
 
     <?php
     // send a signal and retain the results from each Handler
-    $results = $signal->send($this, 'example_signal');
+    $results = $this->signal->send($this, 'example_signal');
     
     // get the last result
     $result = $results->getLast();
@@ -242,6 +242,8 @@ Stopping Signal Processing
 --------------------------
 
 Sometimes it will be necessary to stop processing signal handlers.  If a handler callback returns the `aura\signal\Manager::STOP` constant, then no more handlers for that signal will be processed.
+
+First we define the handlers; note that the second one returns the `STOP` constant:
 
     <?php
     // add signal handlers
@@ -256,18 +258,19 @@ Sometimes it will be necessary to stop processing signal handlers.  If a handler
         'mock_signal',
         function() { return \aura\signal\Manager::STOP; }
     );
-
+    
     $signal->handler(
         'vendor\package\Example',
         'mock_signal',
         function() { return 'third'; }
     );
+
+Then, from inside an object, we send a signal:
+
+    <?php
+    $results = $this->signal->send($this, 'mock_signal');
     
-    // create an object and send a signal with it
-    $object = new \vendor\package\Example;
-    $results = $signal->send($object, 'mock_signal');
-    
-Normally, at the end of that code block, `$results` would have three entries. In this case it has only two, because the second handler returned `\aura\signal\Manager::STOP`. As such, the third handler was never executed. You can call `ResultCollection::isStopped()` to see if the `Manager` stopped processing handlers in this way.
+Normally, `$results` would have three entries. In this case it has only two, because the second handler returned `\aura\signal\Manager::STOP`. As such, the third handler was never executed. You can call `ResultCollection::isStopped()` to see if the `Manager` stopped processing handlers in this way.
 
     <?php
     if ($results->isStopped()) {
