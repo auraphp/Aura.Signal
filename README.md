@@ -1,7 +1,7 @@
 Introduction
 ============
 
-The Aura Signal package is a SignalSlots / EventHandler implementation for PHP 5.3+.  It allows you to invoke handlers ("slots" or "hooks") whenever an object sends a signal ("notification" or "event") to the signal manager.
+The Aura Signal package is a SignalSlots / EventHandler implementation for PHP 5.3+.  With it, we can invoke handlers ("slots" or "hooks") whenever an object sends a signal ("notification" or "event") to the signal manager.
 
 
 Basic Usage
@@ -15,7 +15,7 @@ First, instantiate the signal `Manager` class. The easiest way to do this is to 
     <?php
     $signal = require '/path/to/aura.signal/scripts/instance.php';
 
-Alternatively, you can register the `aura.signal/src` directory with your autoloader and instantiate it yourself:
+Alternatively, register the `aura.signal/src` directory with an autoloader and instantiate it manually:
 
     <?php
     use aura\signal\Manager;
@@ -30,13 +30,13 @@ Adding Signal Handlers
 
 Before we can send a signal to the `Manager`, we will need to add a handler for it.  To add a handler, specify:
 
-1. The class you expect to be sending the signal.  This can be `'*'` for "any class", or a fully-qualified class name.
+1. The class expected to be sending the signal.  This can be `'*'` for "any class", or a fully-qualified class name.
 
 2. The name of the signal.
 
 3. A closure or callback to handle the signal.
 
-For example, to add a closure that will be executed every time a object of the class `vendor\package\Example` sends a signal called `'example_signal'`:
+For example, to add a closure that will be executed every time an object of the class `vendor\package\Example` sends a signal called `'example_signal'`:
 
     <?php
     $signal->handler(
@@ -118,7 +118,7 @@ For example, if we have these two classes, and call `doSomethingElse()` on each 
 Signals By Object
 -----------------
 
-You can tie a handler to an object instance, so that only signals sent from that specific object will be handled.  To do so, pass the object instance as the `$sender` for the handler.
+It is possible to tie a handler to an object instance, so that only signals sent from that specific object will be handled.  To do so, pass the object instance as the `$sender` for the handler.
 
     <?php
     /**
@@ -132,7 +132,7 @@ You can tie a handler to an object instance, so that only signals sent from that
         function ($arg) { echo "$arg!!!";}
     );
 
-If that specific object instance sends the `example_signal` then the handler will be triggered, but no other instance of `ExampleChild` will trigger the handler when it sends the same signal.  This is useful for setting signal handlers from within an object that also contains the callback; for example:
+If that specific object instance sends the `example_signal` then the handler will be triggered, but no other instance of `ExampleChild` will trigger the handler when it sends the same signal.  This is useful for setting signal handlers from within an object that contains its own callback; for example:
 
     <?php
     namespace vendor\package;
@@ -165,7 +165,7 @@ If that specific object instance sends the `example_signal` then the handler wil
         }
     }
 
-When you instantiate `ExampleAnotherChild` and call `action()`, the code:
+When `ExampleAnotherChild::action()` is called, the code:
 
 1. Sends a `'preAction'` signal to the `Manager`, which in turn calls the `preAction()` method on the object
 
@@ -173,7 +173,7 @@ When you instantiate `ExampleAnotherChild` and call `action()`, the code:
 
 3. Sends a `'postAction'` signal to the `Manager`, which in turn calls the `postAction()` method on the object.
 
-If there are class-based handlers for `ExampleAnotherChild` class or its parents, those will also be executed.  This means you can set up combinations of handlers to be applied to classes overall along with handlers that are tied to specific objects.
+If there are class-based handlers for `ExampleAnotherChild` class or its parents, those will also be executed.  This means we can set up combinations of handlers to be applied to classes overall, along with handlers that are tied to specific objects.
 
 
 Advanced Usage
@@ -202,7 +202,40 @@ By default, all `Handler` objects will be appended to the `Manager` stack, and w
 Result Inspection
 -----------------
 
-(implemented; documentation coming soon)
+After a signal has been sent, we can review the results returned by every handler for that signal.  
+
+    <?php
+    // send a signal and retain the results from each Handler
+    $results = $signal->send($this, 'example_signal');
+    
+    // go through each result ...
+    foreach ($results as $result) {
+        
+        // and echo the value returned by the Handler callback
+        echo $result->value;
+    }
+
+The `send()` method returns a `ResultCollection` of `Result` objects, each of which has these properties:
+
+- `$origin`: The object that sent the signal.
+
+- `$sender`: The sender expected by the `Handler`.
+
+- `$signal`: The signal that was sent by the origin.
+
+- `$value`: The value returned by the `Handler` callback.
+
+If you need only the last result, you can call `getLast()` on the `ResultCollection` object.
+
+    <?php
+    // send a signal and retain the results from each Handler
+    $results = $signal->send($this, 'example_signal');
+    
+    // get the last result
+    $result = $results->getLast();
+    
+    // and echo the value returned by the last Handler callback
+    echo $result->value;
 
 
 Stopping Signal Processing
