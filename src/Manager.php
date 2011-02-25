@@ -58,12 +58,12 @@ class Manager
     
     /**
      * 
-     * Have the handlers been sorted by position?
+     * Have the handlers for a signal been sorted by position?
      * 
-     * @var bool
+     * @var array
      * 
      */
-    protected $sorted = false;
+    protected $sorted = array();
     
     /**
      * 
@@ -123,8 +123,8 @@ class Manager
             'signal'   => $signal,
             'callback' => $callback
         ));
-        $this->handlers[(int) $position][] = $handler;
-        $this->sorted = false;
+        $this->handlers[$signal][(int) $position][] = $handler;
+        $this->sorted[$signal] = false;
     }
     
     /**
@@ -134,9 +134,21 @@ class Manager
      * @return array
      * 
      */
-    public function getHandlers()
+    public function getHandlers($signal = null)
     {
-        return $this->handlers;
+        if (! $signal) {
+            return $this->handlers;
+        }
+        
+        if (! isset($this->handlers[$signal])) {
+            return;
+        }
+        
+        if (! $this->sorted[$signal]) {
+            ksort($this->handlers[$signal]);
+        }
+        
+        return $this->handlers[$signal];
     }
     
     /**
@@ -155,10 +167,10 @@ class Manager
      */
     public function send($origin, $signal)
     {
-        // sort the handlers by position
-        if (! $this->sorted) {
-            ksort($this->handlers);
-            $this->sorted = true;
+        // are there any handlers for this signal, regardless of sender?
+        $list = $this->getHandlers($signal);
+        if (! $list) {
+            return;
         }
         
         // get the arguments to be passed to the handler
@@ -169,10 +181,11 @@ class Manager
         // clone a new result collection
         $collection = clone $this->result_collection;
         
-        // go through the handler positions
-        foreach ($this->handlers as $position => $handlers) {
+        // go through the handler positions for the signal
+        foreach ($list as $position => $handlers) {
             // go through each handler in this position
             foreach ($handlers as $handler) {
+                    
                 // try the handler
                 $params = $handler->exec($origin, $signal, $args);
                 // if it executed, it returned the params for a Result object

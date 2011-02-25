@@ -61,13 +61,22 @@ class ManagerTest extends \PHPUnit_Framework_TestCase
                 array('MockGamma', 'method'),
                 6000
             ),
+            // unused
+            array(
+                '\StdClass',
+                'unused_signal',
+                array('MockGamma', 'method'),
+            ),
         ));
         
-        // make sure they get sorted, which only happens on a signal send
-        $signal->send(null, null);
+        // get all handlers (unsorted)
+        $handlers = $signal->getHandlers();
+        $this->assertTrue(count($handlers) == 2);
+        $this->assertTrue(isset($handlers['mock_signal']));
+        $this->assertTrue(isset($handlers['unused_signal']));
         
         // now get them
-        $handlers = $signal->getHandlers();
+        $handlers = $signal->getHandlers('mock_signal');
         
         // should be three position groups, in this order
         $expect = array(4000, 5000, 6000);
@@ -106,6 +115,12 @@ class ManagerTest extends \PHPUnit_Framework_TestCase
                 'mock_signal',
                 function ($foo) { return "$foo-stdclass-early"; },
                 4000
+            ),
+            // unused
+            array(
+                '\StdClass',
+                'unused_signal',
+                array('MockGamma', 'method'),
             ),
         ));
         
