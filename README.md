@@ -241,11 +241,91 @@ If you need only the last result, you can call `getLast()` on the `ResultCollect
 Stopping Signal Processing
 --------------------------
 
-(implemented; documentation coming soon)
+Sometimes it will be necessary to stop processing signal handlers.  If a handler callback returns the `aura\signal\Manager::STOP` constant, then no more handlers for that signal will be processed.
+
+    <?php
+    // add signal handlers
+    $signal->handler(
+        'vendor\package\Example',
+        'mock_signal',
+        function() { return 'first'; }
+    );
+    
+    $signal->handler(
+        'vendor\package\Example',
+        'mock_signal',
+        function() { return \aura\signal\Manager::STOP; }
+    );
+
+    $signal->handler(
+        'vendor\package\Example',
+        'mock_signal',
+        function() { return 'third'; }
+    );
+    
+    // create an object and send a signal with it
+    $object = new \vendor\package\Example;
+    $results = $signal->send($object, 'mock_signal');
+    
+Normally, at the end of that code block, `$results` would have three entries. In this case it has only two, because the second handler returned `\aura\signal\Manager::STOP`. As such, the third handler was never executed. You can call `ResultCollection::isStopped()` to see if the `Manager` stopped processing handlers in this way.
+
+    <?php
+    if ($results->isStopped()) {
+        $result = $results->getLast();
+        echo "Processing for signal 'mock_signal' stopped "
+           . "by handler for " . $result->sender;
+    }
 
 
 Setting Handlers at Construction
 --------------------------------
 
-(implemented; documentation coming soon)
+It is possible to set the `Handler` definitions for a `Manager` at construction time. This allows us to use one or more config files to define the `Handler` stack for a `Manager`.
 
+Given this file at `/path/to/signal_handlers.php` ...
+
+    <?php
+    return array(
+        // first handler
+        array(
+            // sender
+            'vendor\package\Example',
+            // signal
+            'mock_signal',
+            // callback
+            function() { return 'foo'; },
+        ),
+        // second handler
+        array(
+            // sender
+            'vendor\package\Example',
+            // signal
+            'mock_signal',
+            // callback
+            function() { return 'bar'; },
+        ),
+        // third handler
+        array(
+            // sender
+            'vendor\package\Example',
+            // signal
+            'mock_signal',
+            // callback
+            function() { return 'baz'; },
+            // position
+            1000,
+        ),
+    );
+
+... we can configure a `Manager` like so:
+
+    <?php
+    $handlers = require '/path/to/signal_handlers.php';
+    $signal = new Manager(
+        new HandlerFactory,
+        new ResultFactory,
+        new ResultCollection,
+        $handlers
+    );
+
+That is the equivalent of calling `$signal->handler()` three times to add each handler.
