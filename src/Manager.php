@@ -129,7 +129,10 @@ class Manager
     
     /**
      * 
-     * Gets all Handler instances for the Manager.
+     * Gets Handler instances for the Manager.
+     * 
+     * @param string $signal Only get Handler instances for this signal; if 
+     * null, get all Handler instances.
      * 
      * @return array
      * 
@@ -183,23 +186,29 @@ class Manager
         
         // go through the handler positions for the signal
         foreach ($list as $position => $handlers) {
+            
             // go through each handler in this position
             foreach ($handlers as $handler) {
-                    
+                
                 // try the handler
                 $params = $handler->exec($origin, $signal, $args);
+                
                 // if it executed, it returned the params for a Result object
                 if ($params) {
+                    
                     // create a Result object
                     $result = $this->result_factory->newInstance($params);
+                    
                     // allow a meta-handler to examine the Result object,
                     // but only if it wasn't sent from the Manager (this
                     // prevents infinite looping)
                     if ($origin !== $this) {
                         $this->send($this, 'handler_result', $result);
                     }
+                    
                     // retain the result
                     $collection->append($result);
+                    
                     // should we stop processing?
                     if ($result->value === static::STOP) {
                         // yes, leave the processing loop
