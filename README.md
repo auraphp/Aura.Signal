@@ -183,7 +183,7 @@ Advanced Usage
 Handler Position Groups
 ----------------------
 
-(implemented; documentation coming soon)
+
 
 
 Result Inspection

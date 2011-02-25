@@ -52,14 +52,14 @@ class ManagerTest extends \PHPUnit_Framework_TestCase
                 '\StdClass',
                 'mock_signal',
                 array('MockBeta', 'method'),
-                -5
+                4000
             ),
             // late position
             array(
                 '\Exception',
                 'mock_signal',
                 array('MockGamma', 'method'),
-                +5
+                6000
             ),
         ));
         
@@ -70,14 +70,14 @@ class ManagerTest extends \PHPUnit_Framework_TestCase
         $handlers = $signal->getHandlers();
         
         // should be three position groups, in this order
-        $expect = array(-5, 0, 5);
+        $expect = array(4000, 5000, 6000);
         $actual = array_keys($handlers);
         $this->assertSame($expect, $actual);
         
         // make sure the handlers are in the right groups
-        $this->assertSame('\StdClass', $handlers[-5][0]->sender);
-        $this->assertSame('\UnexpectedValueException', $handlers[0][0]->sender);
-        $this->assertSame('\Exception', $handlers[+5][0]->sender);
+        $this->assertSame('\StdClass', $handlers[4000][0]->sender);
+        $this->assertSame('\UnexpectedValueException', $handlers[5000][0]->sender);
+        $this->assertSame('\Exception', $handlers[6000][0]->sender);
     }
     
     /**
@@ -91,21 +91,21 @@ class ManagerTest extends \PHPUnit_Framework_TestCase
                 '\Unexpected',
                 'mock_signal',
                 function ($foo) { return "$foo-unexpected"; },
-                +5
+                6000
             ),
             // no position
             array(
                 '\StdClass',
                 'mock_signal',
                 function ($foo) { return "$foo-stdclass-mid"; },
-                0
+                5000
             ),
             // early position
             array(
                 '\StdClass',
                 'mock_signal',
                 function ($foo) { return "$foo-stdclass-early"; },
-                -5
+                4000
             ),
         ));
         
@@ -121,7 +121,7 @@ class ManagerTest extends \PHPUnit_Framework_TestCase
             '\StdClass',
             'mock_signal',
             function ($foo) { return Manager::STOP; },
-            -1 // just before the mid group
+            4500 // just before the mid group
         );
         
         $collection = $signal->send($origin, 'mock_signal', 'hello');

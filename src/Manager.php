@@ -91,7 +91,7 @@ class Manager
             if (isset($handler[3])) {
                 $position = $handler[3];
             } else {
-                $position = 0;
+                $position = 5000;
             }
             $this->handler($sender, $signal, $callback, $position);
         }
@@ -116,7 +116,7 @@ class Manager
      * @return void
      * 
      */
-    public function handler($sender, $signal, $callback, $position = 0)
+    public function handler($sender, $signal, $callback, $position = 5000)
     {
         $handler = $this->handler_factory->newInstance(array(
             'sender'   => $sender,
@@ -177,8 +177,15 @@ class Manager
                 $params = $handler->exec($origin, $signal, $args);
                 // if it executed, it returned the params for a Result object
                 if ($params) {
-                    // create a Result object and retain it
+                    // create a Result object
                     $result = $this->result_factory->newInstance($params);
+                    // allow a meta-handler to examine the Result object,
+                    // but only if it wasn't sent from the Manager (this
+                    // prevents infinite looping)
+                    if ($origin !== $this) {
+                        $this->send($this, 'handler_result', $result);
+                    }
+                    // retain the result
                     $collection->append($result);
                     // should we stop processing?
                     if ($result->value === static::STOP) {
