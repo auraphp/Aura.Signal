@@ -183,7 +183,20 @@ Advanced Usage
 Handler Position Groups
 ----------------------
 
+By default, all `Handler` objects will be appended to the `Manager` stack, and will be processed the order they were added.  Sometimes you will need a `Handler` to be processed in a different order; for example, before or after all others. If so, you can pass a `$position` value when adding a `Handler` to the `Manager`.  (The default `$position` for `Handler` objects is 5000.)
 
+    <?php
+    // add a closure at position 1000, which means it will be processed
+    // before all handlers at the default position 5000.
+    $closure = function() { echo "Before all others."; };
+    $signal->handler('ExampleChild', 'example_signal', $closure, 1000);
+
+    // add a closure at position 9000, which means it will be processed
+    // after all handlers at the default position 5000.
+    $closure = function() { echo "After all others."; };
+    $signal->handler('ExampleChild', 'example_signal', $closure, 1000);
+
+`Handler` objects added at a position will still be appended within that position group.
 
 
 Result Inspection
