@@ -1,13 +1,16 @@
 <?php
+/**
+ * 
+ * This file is part of the Aura Project for PHP.
+ * 
+ * @license http://opensource.org/licenses/bsd-license.php BSD
+ * 
+ */
 namespace aura\signal;
 
 /**
  * 
- * This is a SignalSlot implementation. Each Handler are inheritance-aware; if
- * you add a Handler for a Parent class signal, and a class Child that 
- * extends Parent sends that signal signal, the Handler for the Parent will 
- * handle it. This allows you to have generic Handler instances for class 
- * families, and specific Handler instances for subclasses.
+ * Processes signals through to Handler objects.
  * 
  * @package aura.signal
  * 
@@ -15,7 +18,11 @@ namespace aura\signal;
 class Manager
 {
     /**
+     * 
      * Indicates that the signal should not call more Handler instances.
+     * 
+     * @const string
+     * 
      */
     const STOP = 'aura\signal\Manager::STOP';
     
@@ -32,7 +39,7 @@ class Manager
      * 
      * An array of Handler instances that respond to class signals.
      * 
-     * @var array 
+     * @var array
      * 
      */
     protected $handlers = array();

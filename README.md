@@ -322,3 +322,9 @@ Given this file at `/path/to/signal_handlers.php` ...
     );
 
 That is the equivalent of calling `$signal->handler()` three times to add each handler.
+
+
+Thanks
+------
+
+Thanks to Richard "Cyberlot" Thomas for the original suggestion, Galactic Void for bringing it back up, and [Matthew Weier O'Phinney](http://weierophinney.net/matthew/archives/251-Aspects,-Filters,-and-Signals,-Oh,-My!.html).

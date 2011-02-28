@@ -1,5 +1,20 @@
 <?php
+/**
+ * 
+ * This file is part of the Aura Project for PHP.
+ * 
+ * @license http://opensource.org/licenses/bsd-license.php BSD
+ * 
+ */
 namespace aura\signal;
+
+/**
+ * 
+ * A signal Handler definition.
+ * 
+ * @package aura.signal
+ * 
+ */
 class Handler
 {
     /**
@@ -50,6 +65,15 @@ class Handler
         $this->callback = $callback;
     }
     
+    /**
+     * 
+     * Make properties available as magic read-only.
+     * 
+     * @param string $key The property name.
+     * 
+     * @return mixed
+     * 
+     */
     public function __get($key)
     {
         return $this->$key;
@@ -70,8 +94,6 @@ class Handler
      * 
      * @return null|array An array of parameters suitable for creating a Result
      * object, or null if the origin and signal did not match this Handler.
-     * 
-     * @todo How can we return a value, *and* stop processing?
      * 
      */
     public function exec($origin, $signal, $args)

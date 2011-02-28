@@ -1,16 +1,48 @@
 <?php
+/**
+ * 
+ * This file is part of the Aura Project for PHP.
+ * 
+ * @license http://opensource.org/licenses/bsd-license.php BSD
+ * 
+ */
 namespace aura\signal;
+
+/**
+ * 
+ * A factory to create Handler objects.
+ * 
+ * @package aura.signal
+ * 
+ */
 class HandlerFactory
 {
-    protected $base = array(
+    /**
+     * 
+     * An array of default parameters for Handler objects.
+     * 
+     * @var array
+     * 
+     */
+    protected $params = array(
         'sender'   => null,
-        'signal'    => null,
+        'signal'   => null,
         'callback' => null,
     );
     
+    /**
+     * 
+     * Creates and returns a new Handler object.
+     * 
+     * @param array $params An array of key-value pairs corresponding to
+     * Handler constructor params.
+     * 
+     * @return Handler
+     * 
+     */
     public function newInstance(array $params)
     {
-        $params = array_merge($this->base, $params);
+        $params = array_merge($this->params, $params);
         return new Handler(
             $params['sender'],
             $params['signal'],
