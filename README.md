@@ -179,9 +179,8 @@ If there are class-based handlers for `ExampleAnotherChild` class or its parents
 Advanced Usage
 ==============
 
-
 Handler Position Groups
-----------------------
+-----------------------
 
 By default, all `Handler` objects will be appended to the `Manager` stack, and will be processed the order they were added.  Sometimes you will need a `Handler` to be processed in a different order; for example, before or after all others. If so, you can pass a `$position` value when adding a `Handler` to the `Manager`.  (The default `$position` for `Handler` objects is 5000.)
 
@@ -205,17 +204,20 @@ Result Inspection
 After a signal has been sent, we can review the results returned by every handler for that signal.  
 
     <?php
-    // send a signal and retain the results from each Handler
-    $results = $this->signal->send($this, 'example_signal');
+    // send a signal
+    $this->signal->send($this, 'example_signal');
+    
+    // get the result collection
+    $results =  $this->signal->getResults();
     
     // go through each result ...
     foreach ($results as $result) {
         
-        // and echo the value returned by the Handler callback
+        // ... and echo the value returned by the Handler callback
         echo $result->value;
     }
 
-The `send()` method returns a `ResultCollection` of `Result` objects, each of which has these properties:
+The `getResults()` method returns a `ResultCollection` of `Result` objects, each of which has these properties:
 
 - `$origin`: The object that sent the signal.
 
@@ -268,7 +270,8 @@ First we define the handlers; note that the second one returns the `STOP` consta
 Then, from inside an object, we send a signal:
 
     <?php
-    $results = $this->signal->send($this, 'mock_signal');
+    $this->signal->send($this, 'mock_signal');
+    $results = $this->signal->getResults();
     
 Normally, `$results` would have three entries. In this case it has only two, because the second handler returned `\aura\signal\Manager::STOP`. As such, the third handler was never executed. You can call `ResultCollection::isStopped()` to see if the `Manager` stopped processing handlers in this way.
 

@@ -65,6 +65,15 @@ class Manager
     
     /**
      * 
+     * A ResultCollection from the last signal sent.
+     * 
+     * @var ResultCollection
+     * 
+     */
+    protected $results;
+    
+    /**
+     * 
      * Have the handlers for a signal been sorted by position?
      * 
      * @var array
@@ -102,6 +111,7 @@ class Manager
             }
             $this->handler($sender, $signal, $callback, $position);
         }
+        $this->results = clone $this->result_collection;
     }
     
     /**
@@ -163,7 +173,7 @@ class Manager
     
     /**
      * 
-     * Invokes the Handler for a sender and signal.
+     * Invokes the Handler objects for a sender and signal.
      * 
      * @param object $origin The object sending the signal. Note that this is
      * always an object, not a class name.
@@ -177,19 +187,39 @@ class Manager
      */
     public function send($origin, $signal)
     {
-        // are there any handlers for this signal, regardless of sender?
-        $list = $this->getHandlers($signal);
-        if (! $list) {
-            return;
-        }
+        // clone a new result collection
+        $this->results = clone $this->result_collection;
         
         // get the arguments to be passed to the handler
         $args = func_get_args();
         array_shift($args);
         array_shift($args);
         
-        // clone a new result collection
-        $collection = clone $this->result_collection;
+        // now process the signal through the handlers
+        $this->process($origin, $signal, $args);
+    }
+    
+    /**
+     * 
+     * Invokes the Handler objects for a sender and signal.
+     * 
+     * @param object $origin The object sending the signal. Note that this is
+     * always an object, not a class name.
+     * 
+     * @param string $signal The name of the signal from that origin.
+     * 
+     * @param $args Arguments to pass to the Handler callback.
+     * 
+     * @return ResultCollection The results from each of the Handler objects.
+     * 
+     */
+    protected function process($origin, $signal, $args)
+    {
+        // are there any handlers for this signal, regardless of sender?
+        $list = $this->getHandlers($signal);
+        if (! $list) {
+            return;
+        }
         
         // go through the handler positions for the signal
         foreach ($list as $position => $handlers) {
@@ -208,24 +238,34 @@ class Manager
                     
                     // allow a meta-handler to examine the Result object,
                     // but only if it wasn't sent from the Manager (this
-                    // prevents infinite looping)
+                    // prevents infinite looping). use process() instead
+                    // of send() to prevent resetting the $results prop.
                     if ($origin !== $this) {
-                        $this->send($this, 'handler_result', $result);
+                        $this->process($this, 'handler_result', array($result));
                     }
                     
                     // retain the result
-                    $collection->append($result);
+                    $this->results->append($result);
                     
                     // should we stop processing?
                     if ($result->value === static::STOP) {
                         // yes, leave the processing loop
-                        return $collection;
+                        return;
                     }
                 }
             }
         }
-        
-        // done!
-        return $collection;
+    }
+    
+    /**
+     * 
+     * Returns the ResultCollection from the last signal processing.
+     * 
+     * @return ResultCollection
+     * 
+     */
+    public function getResults()
+    {
+        return $this->results;
     }
 }

@@ -126,10 +126,11 @@ class ManagerTest extends \PHPUnit_Framework_TestCase
         
         // send a signal that should match two handlers
         $origin = new \StdClass;
-        $collection = $signal->send($origin, 'mock_signal', 'hello');
-        $this->assertTrue(count($collection) == 2);
-        $this->assertSame('hello-stdclass-early', $collection[0]->value);
-        $this->assertSame('hello-stdclass-mid', $collection[1]->value);
+        $signal->send($origin, 'mock_signal', 'hello');
+        $results1 = $signal->getResults();
+        $this->assertEquals(2, count($results1));
+        $this->assertSame('hello-stdclass-early', $results1[0]->value);
+        $this->assertSame('hello-stdclass-mid', $results1[1]->value);
         
         // add a handler that stops processing
         $signal->handler(
@@ -139,9 +140,11 @@ class ManagerTest extends \PHPUnit_Framework_TestCase
             4500 // just before the mid group
         );
         
-        $collection = $signal->send($origin, 'mock_signal', 'hello');
-        $this->assertTrue(count($collection) == 2);
-        $this->assertSame('hello-stdclass-early', $collection[0]->value);
-        $this->assertSame(Manager::STOP, $collection[1]->value);
+        $signal->send($origin, 'mock_signal', 'hello');
+        $results2 = $signal->getResults();
+        $this->assertNotSame($results1, $results2);
+        $this->assertEquals(2, count($results2));
+        $this->assertSame('hello-stdclass-early', $results2[0]->value);
+        $this->assertSame(Manager::STOP, $results2[1]->value);
     }
 }
