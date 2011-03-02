@@ -15,15 +15,6 @@ First, instantiate the signal `Manager` class. The easiest way to do this is to 
     <?php
     $signal = require '/path/to/aura.signal/scripts/instance.php';
 
-Alternatively, register the `aura.signal/src` directory with an autoloader and instantiate it manually:
-
-    <?php
-    use aura\signal\Manager;
-    use aura\signal\HandlerFactory;
-    use aura\signal\ResultFactory;
-    use aura\signal\ResultCollection;
-    return new Manager(new HandlerFactory, new ResultFactory, new ResultCollection);
-
 
 Adding Signal Handlers
 ----------------------
@@ -316,6 +307,7 @@ Given this file at `/path/to/signal_handlers.php` ...
 ... we can configure a `Manager` like so:
 
     <?php
+    namespace aura\signal;
     $handlers = require '/path/to/signal_handlers.php';
     $signal = new Manager(
         new HandlerFactory,
