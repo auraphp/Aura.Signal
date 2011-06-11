@@ -1,5 +1,5 @@
 <?php
-namespace aura\signal;
+namespace Aura\Signal;
 
 /**
  * Test class for Result.
@@ -48,7 +48,7 @@ class ResultTest extends \PHPUnit_Framework_TestCase
             'value'   => $value,
         ));
         
-        $this->assertType('aura\signal\Result', $result);
+        $this->assertType('Aura\Signal\Result', $result);
         $this->assertSame($result->origin, $origin);
         $this->assertSame($result->sender, $sender);
         $this->assertSame($result->signal, $signal);

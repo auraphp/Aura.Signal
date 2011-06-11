@@ -6,13 +6,13 @@
  * @license http://opensource.org/licenses/bsd-license.php BSD
  * 
  */
-namespace aura\signal;
+namespace Aura\Signal;
 
 /**
  * 
  * Processes signals through to Handler objects.
  * 
- * @package aura.signal
+ * @package Aura.Signal
  * 
  */
 class Manager
@@ -24,7 +24,7 @@ class Manager
      * @const string
      * 
      */
-    const STOP = 'aura\signal\Manager::STOP';
+    const STOP = 'Aura\Signal\Manager::STOP';
     
     /**
      * 
