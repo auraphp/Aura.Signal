@@ -1,5 +1,5 @@
 <?php
-namespace aura\signal;
+namespace Aura\Signal;
 
 /**
  * Test class for ResultCollection.
