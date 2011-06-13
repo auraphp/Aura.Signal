@@ -6,13 +6,13 @@
  * @license http://opensource.org/licenses/bsd-license.php BSD
  * 
  */
-namespace aura\signal;
+namespace Aura\Signal;
 
 /**
  * 
  * Represents a collection of Result objects.
  * 
- * @package aura.signal
+ * @package Aura.Signal
  * 
  */
 class ResultCollection extends \ArrayObject

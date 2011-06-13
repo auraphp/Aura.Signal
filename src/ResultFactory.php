@@ -6,13 +6,13 @@
  * @license http://opensource.org/licenses/bsd-license.php BSD
  * 
  */
-namespace aura\signal;
+namespace Aura\Signal;
 
 /**
  * 
  * A factory to create Result objects.
  * 
- * @package aura.signal
+ * @package Aura.Signal
  * 
  */
 class ResultFactory
