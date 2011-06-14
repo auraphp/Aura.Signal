@@ -1,1 +1,1 @@
-Read Documentation : [http://auraphp.github.com/aura.signal](http://auraphp.github.com/aura.signal)
+Read Documentation : [http://auraphp.github.com/Aura.Signal](http://auraphp.github.com/Aura.Signal)
