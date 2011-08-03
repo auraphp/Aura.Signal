@@ -197,6 +197,9 @@ class Manager
         
         // now process the signal through the handlers
         $this->process($origin, $signal, $args);
+        
+        //return result collection
+        return $this->results;
     }
     
     /**
