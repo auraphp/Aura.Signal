@@ -1,5 +1,10 @@
 <?php
 /**
+ * Package prefix for autoloader.
+ */
+$loader->addPrefix('Aura\Signal\\', dirname(__DIR__) . DIRECTORY_SEPARATOR . 'src');
+
+/**
  * Dependency services.
  */
 $di->set('signal_manager', function() use ($di) {
