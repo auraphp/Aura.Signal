@@ -97,12 +97,12 @@ class Manager
         HandlerFactory   $handler_factory,
         ResultFactory    $result_factory,
         ResultCollection $result_collection,
-        array            $handlers = null
+        array            $handlers = array()
     ) {
         $this->handler_factory   = $handler_factory;
         $this->result_factory    = $result_factory;
         $this->result_collection = $result_collection;
-        foreach ((array) $handlers as $handler) {
+        foreach ($handlers as $handler) {
             list($sender, $signal, $callback) = $handler;
             if (isset($handler[3])) {
                 $position = $handler[3];
