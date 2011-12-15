@@ -48,7 +48,7 @@ class ResultTest extends \PHPUnit_Framework_TestCase
             'value'   => $value,
         ));
         
-        $this->assertType('Aura\Signal\Result', $result);
+        $this->assertInstanceOf('Aura\Signal\Result', $result);
         $this->assertSame($result->origin, $origin);
         $this->assertSame($result->sender, $sender);
         $this->assertSame($result->signal, $signal);
