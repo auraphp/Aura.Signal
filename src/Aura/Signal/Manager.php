@@ -195,8 +195,9 @@ class Manager
         array_shift($args);
         array_shift($args);
         
-        // now process the signal through the handlers
+        // now process the signal through the handlers and return the results
         $this->process($origin, $signal, $args);
+        return $this->results;
     }
     
     /**
@@ -209,8 +210,6 @@ class Manager
      * @param string $signal The name of the signal from that origin.
      * 
      * @param $args Arguments to pass to the Handler callback.
-     * 
-     * @return ResultCollection The results from each of the Handler objects.
      * 
      */
     protected function process($origin, $signal, $args)
