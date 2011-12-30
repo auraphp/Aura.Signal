@@ -2,7 +2,7 @@
 /**
  * Package prefix for autoloader.
  */
-$loader->addPrefix('Aura\Signal\\', dirname(__DIR__) . DIRECTORY_SEPARATOR . 'src');
+$loader->add('Aura\Signal\\', dirname(__DIR__) . DIRECTORY_SEPARATOR . 'src');
 
 /**
  * Dependency services.
