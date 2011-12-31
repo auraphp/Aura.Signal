@@ -113,12 +113,12 @@ class Handler
         // do the sender and signal match?
         if ($match_sender && $match_signal) {
             // yes, return an array of params with the callback return value
-            return array(
+            return [
                 'origin' => $origin,
                 'sender' => $this->sender,
                 'signal' => $this->signal,
                 'value'  => call_user_func_array($this->callback, $args)
-            );
+            ];
         }
     }
 }

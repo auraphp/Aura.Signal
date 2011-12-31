@@ -46,19 +46,19 @@ class HandlerTest extends \PHPUnit_Framework_TestCase
         
         // this should be a match
         $origin = new \Exception;
-        $params = $handler->exec($origin, 'mock_signal', array('hello'));
+        $params = $handler->exec($origin, 'mock_signal', ['hello']);
         $this->assertSame('hello!!!', $params['value']);
         $this->assertSame($origin, $params['origin']);
         
         // this should be a match, since it has \Exception as a parent
         $origin = new \UnexpectedValueException;
-        $params = $handler->exec($origin, 'mock_signal', array('hello'));
+        $params = $handler->exec($origin, 'mock_signal', ['hello']);
         $this->assertSame('hello!!!', $params['value']);
         $this->assertSame($origin, $params['origin']);
         
         // this should not be a match
         $origin = new \StdClass;
-        $params = $handler->exec($origin, 'mock_signal', array('hello'));
+        $params = $handler->exec($origin, 'mock_signal', ['hello']);
         $this->assertNull($params);
     }
     
@@ -68,13 +68,13 @@ class HandlerTest extends \PHPUnit_Framework_TestCase
         $handler = $this->newHandler($object1);
         
         // this should be a match
-        $params = $handler->exec($object1, 'mock_signal', array('hello'));
+        $params = $handler->exec($object1, 'mock_signal', ['hello']);
         $this->assertSame('hello!!!', $params['value']);
         $this->assertSame($object1, $params['origin']);
         
         // this should not match, even though it's of the same class
         $object2 = new \StdClass;
-        $params = $handler->exec($object2, 'mock_signal', array('hello'));
+        $params = $handler->exec($object2, 'mock_signal', ['hello']);
         $this->assertNull($params);
     }
     
@@ -84,18 +84,18 @@ class HandlerTest extends \PHPUnit_Framework_TestCase
         
         // this should be a match
         $origin = new \Exception;
-        $params = $handler->exec($origin, 'mock_signal', array('hello'));
+        $params = $handler->exec($origin, 'mock_signal', ['hello']);
         $this->assertSame('hello!!!', $params['value']);
         $this->assertSame($origin, $params['origin']);
         
         // this should be a match
         $origin = new \StdClass;
-        $params = $handler->exec($origin, 'mock_signal', array('hello'));
+        $params = $handler->exec($origin, 'mock_signal', ['hello']);
         $this->assertSame('hello!!!', $params['value']);
         $this->assertSame($origin, $params['origin']);
         
         // this should not be a match (wrong signal)
-        $params = $handler->exec($origin, 'wrong_signal', array('hello'));
+        $params = $handler->exec($origin, 'wrong_signal', ['hello']);
         $this->assertNull($params);
     }
 }

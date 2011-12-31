@@ -24,11 +24,11 @@ class HandlerFactory
      * @var array
      * 
      */
-    protected $params = array(
+    protected $params = [
         'sender'   => null,
         'signal'   => null,
         'callback' => null,
-    );
+    ];
     
     /**
      * 

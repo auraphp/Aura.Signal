@@ -24,12 +24,12 @@ class ResultFactory
      * @var array
      * 
      */
-    protected $params = array(
+    protected $params = [
         'origin'  => null,
         'sender'  => null,
         'signal'  => null,
         'value'   => null,
-    );
+    ];
     
     /**
      * 

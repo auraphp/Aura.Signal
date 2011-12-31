@@ -42,7 +42,7 @@ class Manager
      * @var array
      * 
      */
-    protected $handlers = array();
+    protected $handlers = [];
     
     /**
      * 
@@ -79,7 +79,7 @@ class Manager
      * @var array
      * 
      */
-    protected $sorted = array();
+    protected $sorted = [];
     
     /**
      * 
@@ -97,7 +97,7 @@ class Manager
         HandlerFactory   $handler_factory,
         ResultFactory    $result_factory,
         ResultCollection $result_collection,
-        array            $handlers = array()
+        array            $handlers = []
     ) {
         $this->handler_factory   = $handler_factory;
         $this->result_factory    = $result_factory;
@@ -135,11 +135,11 @@ class Manager
      */
     public function handler($sender, $signal, $callback, $position = 5000)
     {
-        $handler = $this->handler_factory->newInstance(array(
+        $handler = $this->handler_factory->newInstance([
             'sender'   => $sender,
             'signal'   => $signal,
             'callback' => $callback
-        ));
+        ]);
         $this->handlers[$signal][(int) $position][] = $handler;
         $this->sorted[$signal] = false;
     }
@@ -240,7 +240,7 @@ class Manager
                     // prevents infinite looping). use process() instead
                     // of send() to prevent resetting the $results prop.
                     if ($origin !== $this) {
-                        $this->process($this, 'handler_result', array($result));
+                        $this->process($this, 'handler_result', [$result]);
                     }
                     
                     // retain the result

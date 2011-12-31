@@ -33,22 +33,22 @@ class ResultCollectionTest extends \PHPUnit_Framework_TestCase
         
         for ($i = 0; $i < 5; $i++) {
             $value  = 'mock_value_' . $i;
-            $result = $this->factory->newInstance(array(
+            $result = $this->factory->newInstance([
                 'origin'  => $origin,
                 'sender'  => $sender,
                 'signal'  => $signal,
                 'value'   => $value,
-            ));
+            ]);
             $collection->append($result);
         }
         
         if ($stopped) {
-            $result = $this->factory->newInstance(array(
+            $result = $this->factory->newInstance([
                 'origin'  => $origin,
                 'sender'  => $sender,
                 'signal'  => $signal,
                 'value'   => Manager::STOP,
-            ));
+            ]);
             $collection->append($result);
         }
         return $collection;

@@ -40,34 +40,34 @@ class ManagerTest extends \PHPUnit_Framework_TestCase
      */
     public function testHandlerAndGetHandlers()
     {
-        $signal = $this->newManager(array(
+        $signal = $this->newManager([
             // no position
-            array(
+            [
                 '\UnexpectedValueException',
                 'mock_signal',
-                array('MockAlpha', 'method')
-            ),
+                ['MockAlpha', 'method'],
+            ],
             // early position
-            array(
+            [
                 '\StdClass',
                 'mock_signal',
-                array('MockBeta', 'method'),
+                ['MockBeta', 'method'],
                 4000
-            ),
+            ],
             // late position
-            array(
+            [
                 '\Exception',
                 'mock_signal',
-                array('MockGamma', 'method'),
+                ['MockGamma', 'method'],
                 6000
-            ),
+            ],
             // unused
-            array(
+            [
                 '\StdClass',
                 'unused_signal',
-                array('MockGamma', 'method'),
-            ),
-        ));
+                ['MockGamma', 'method'],
+            ],
+        ]);
         
         // get all handlers (unsorted)
         $handlers = $signal->getHandlers();
@@ -79,7 +79,7 @@ class ManagerTest extends \PHPUnit_Framework_TestCase
         $handlers = $signal->getHandlers('mock_signal');
         
         // should be three position groups, in this order
-        $expect = array(4000, 5000, 6000);
+        $expect = [4000, 5000, 6000];
         $actual = array_keys($handlers);
         $this->assertSame($expect, $actual);
         
@@ -94,35 +94,35 @@ class ManagerTest extends \PHPUnit_Framework_TestCase
      */
     public function testSend()
     {
-        $signal = $this->newManager(array(
+        $signal = $this->newManager([
             // late position
-            array(
+            [
                 '\Unexpected',
                 'mock_signal',
                 function ($foo) { return "$foo-unexpected"; },
                 6000
-            ),
+            ],
             // no position
-            array(
+            [
                 '\StdClass',
                 'mock_signal',
                 function ($foo) { return "$foo-stdclass-mid"; },
                 5000
-            ),
+            ],
             // early position
-            array(
+            [
                 '\StdClass',
                 'mock_signal',
                 function ($foo) { return "$foo-stdclass-early"; },
                 4000
-            ),
+            ],
             // unused
-            array(
+            [
                 '\StdClass',
                 'unused_signal',
-                array('MockGamma', 'method'),
-            ),
-        ));
+                ['MockGamma', 'method'],
+            ],
+        ]);
         
         // send a signal that should match two handlers
         $origin = new \StdClass;

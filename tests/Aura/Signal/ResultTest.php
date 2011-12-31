@@ -41,12 +41,12 @@ class ResultTest extends \PHPUnit_Framework_TestCase
         $signal = 'mock_signal';
         $value  = 'mock_value';
         
-        $result = $this->factory->newInstance(array(
+        $result = $this->factory->newInstance([
             'origin'  => $origin,
             'sender'  => $sender,
             'signal'  => $signal,
             'value'   => $value,
-        ));
+        ]);
         
         $this->assertInstanceOf('Aura\Signal\Result', $result);
         $this->assertSame($result->origin, $origin);
