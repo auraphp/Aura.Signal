@@ -83,7 +83,7 @@ For example, if we have these two classes, and call `doSomethingElse()` on each 
         public function doSomethingElse($text)
         {
             echo $text . $text . $text;
-            $this->signal->send($this, 'example_signal', $text)
+            $this->signal->send($this, 'example_signal', $text);
         }
     }
     
