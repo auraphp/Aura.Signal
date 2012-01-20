@@ -1,0 +1,1 @@
+A SignalSlots/EventHandler implementation

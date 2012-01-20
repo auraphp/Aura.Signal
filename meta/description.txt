@@ -1,0 +1,1 @@
+A SignalSlots/EventHandler implementation for PHP; with it, we can invoke handlers ("slots" or "hooks") whenever an object sends a signal ("notification" or "event") to the signal manager.
