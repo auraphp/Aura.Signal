@@ -134,6 +134,7 @@ If that specific object instance sends the `example_signal` then the handler wil
         public function __construct(SignalManager $signal)
         {
             parent::__construct();
+            $this->signal = $signal;
             $this->signal->handler($this, 'preAction', [$this, 'preAction']);
             $this->signal->handler($this, 'postAction', [$this, 'postAction']);
         }
@@ -141,7 +142,7 @@ If that specific object instance sends the `example_signal` then the handler wil
         public function action()
         {
             $this->signal->send($this, 'preAction');
-            $this->doSomething();
+            $this->doSomething( __METHOD__ );
             $this->signal->send($this, 'postAction');
         }
         
@@ -178,13 +179,19 @@ By default, all `Handler` objects will be appended to the `Manager` stack, and w
     <?php
     // add a closure at position 1000, which means it will be processed
     // before all handlers at the default position 5000.
-    $closure = function() { echo "Before all others."; };
-    $signal->handler('ExampleChild', 'example_signal', $closure, 1000);
+    $closure = function() { 
+        echo "Before all others."; 
+        return "First closure";
+    };
+    $signal->handler('Vendor\Package\ExampleChild', 'example_signal', $closure, 1000);
 
     // add a closure at position 9000, which means it will be processed
     // after all handlers at the default position 5000.
-    $closure = function() { echo "After all others."; };
-    $signal->handler('ExampleChild', 'example_signal', $closure, 1000);
+    $closure = function() { 
+        echo "After all others."; 
+        return "Second closure";
+    };
+    $signal->handler('Vendor\Package\ExampleChild', 'example_signal', $closure, 1000);
 
 `Handler` objects added at a position will still be appended within that position group.
 
@@ -261,8 +268,9 @@ First we define the handlers; note that the second one returns the `STOP` consta
 Then, from inside an object, we send a signal:
 
     <?php
-    $this->signal->send($this, 'mock_signal');
-    $results = $this->signal->getResults();
+    $results = $this->signal->send($this, 'mock_signal');
+    // Or you can get via 
+    // $results = $this->signal->getResults();
     
 Normally, `$results` would have three entries. In this case it has only two, because the second handler returned `\aura\signal\Manager::STOP`. As such, the third handler was never executed. You can call `ResultCollection::isStopped()` to see if the `Manager` stopped processing handlers in this way.
 
