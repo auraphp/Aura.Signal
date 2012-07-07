@@ -3,6 +3,8 @@
  * 
  * This file is part of the Aura Project for PHP.
  * 
+ * @package Aura.Signal
+ * 
  * @license http://opensource.org/licenses/bsd-license.php BSD
  * 
  */
@@ -87,6 +89,8 @@ class Manager
      * 
      * @param HandlerFactory $handler_factory A factory to create Handler 
      * objects.
+     * 
+     * @param ResultFactory $result_factory A factory to create Result objects.
      * 
      * @param ResultCollection $result_collection A prototype ResultCollection.
      * 
