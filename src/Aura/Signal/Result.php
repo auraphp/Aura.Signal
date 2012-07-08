@@ -27,7 +27,7 @@ class Result
      * 
      */
     protected $origin;
-    
+
     /**
      * 
      * The sender defined by the Handler.
@@ -36,7 +36,7 @@ class Result
      * 
      */
     protected $sender;
-    
+
     /**
      * 
      * The signal defined by the Handler and sent by the origin.
@@ -45,7 +45,7 @@ class Result
      * 
      */
     protected $signal;
-    
+
     /**
      * 
      * The value returned by the Handler callback, if any.
@@ -54,7 +54,7 @@ class Result
      * 
      */
     protected $value;
-    
+
     /**
      * 
      * Constructor.
@@ -76,7 +76,7 @@ class Result
         $this->signal = $signal;
         $this->value  = $value;
     }
-    
+
     /**
      * 
      * Make the properties available as magic read-only.
@@ -91,3 +91,4 @@ class Result
         return $this->$key;
     }
 }
+ 

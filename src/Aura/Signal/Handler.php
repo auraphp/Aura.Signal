@@ -30,7 +30,7 @@ class Handler
      * 
      */
     protected $sender;
-    
+
     /**
      * 
      * Handle this signal from the sender.
@@ -39,7 +39,7 @@ class Handler
      * 
      */
     protected $signal;
-    
+
     /**
      * 
      * Use this callback to handle the signal.
@@ -48,7 +48,7 @@ class Handler
      * 
      */
     protected $callback;
-    
+
     /**
      * 
      * Constructor.
@@ -66,7 +66,7 @@ class Handler
         $this->signal   = $signal;
         $this->callback = $callback;
     }
-    
+
     /**
      * 
      * Make properties available as magic read-only.
@@ -80,7 +80,7 @@ class Handler
     {
         return $this->$key;
     }
-    
+
     /**
      * 
      * Execute the handler: if the originating object matches the required
@@ -108,10 +108,10 @@ class Handler
             // match on a class
             $match_sender = $this->sender == '*' || $origin instanceof $this->sender;
         }
-        
+
         // match on a signal
         $match_signal = $this->signal == '*' || $this->signal == $signal;
-        
+
         // do the sender and signal match?
         if ($match_sender && $match_signal) {
             // yes, return an array of params with the callback return value
@@ -124,3 +124,4 @@ class Handler
         }
     }
 }
+ 
