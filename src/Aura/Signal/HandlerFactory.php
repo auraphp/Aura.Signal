@@ -31,7 +31,7 @@ class HandlerFactory
         'signal'   => null,
         'callback' => null,
     ];
-    
+
     /**
      * 
      * Creates and returns a new Handler object.
@@ -52,3 +52,4 @@ class HandlerFactory
         );
     }
 }
+ 

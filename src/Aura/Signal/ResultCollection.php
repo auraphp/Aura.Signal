@@ -32,7 +32,7 @@ class ResultCollection extends \ArrayObject
     {
         parent::__construct([]);
     }
-    
+
     /**
      * 
      * Returns the last Result in the collection.
@@ -47,7 +47,7 @@ class ResultCollection extends \ArrayObject
             return $this[$k - 1];
         }
     }
-    
+
     /**
      * 
      * Tells if the ResultCollection was stopped during processing.
@@ -63,3 +63,4 @@ class ResultCollection extends \ArrayObject
         }
     }
 }
+ 

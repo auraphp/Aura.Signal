@@ -32,7 +32,7 @@ class ResultFactory
         'signal'  => null,
         'value'   => null,
     ];
-    
+
     /**
      * 
      * Creates and returns a new Option object.
@@ -54,3 +54,4 @@ class ResultFactory
         );
     }
 }
+ 

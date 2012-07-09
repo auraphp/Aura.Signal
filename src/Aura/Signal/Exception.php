@@ -17,4 +17,7 @@ namespace Aura\Signal;
  * @package Aura.Signal
  * 
  */
-class Exception extends \Exception {}
+class Exception extends \Exception
+{
+}
+ 
