@@ -1,8 +1,16 @@
 Aura Signal
 ===========
 
-The Aura Signal package is a SignalSlots/EventHandler implementation for PHP.  With it, we can invoke handlers ("slots" or "hooks") whenever an object sends a signal ("notification" or "event") to the signal manager.
+The Aura Signal package is a SignalSlots/EventHandler implementation for PHP.
+With it, we can invoke handlers ("slots" or "hooks") whenever an object sends
+a signal ("notification" or "event") to the signal manager.
 
+This package is compliant with [PSR-0][], [PSR-1][], and [PSR-2][]. If you
+notice compliance oversights, please send a patch via pull request.
+
+[PSR-0]: https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-0.md
+[PSR-1]: https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-1-basic-coding-standard.md
+[PSR-2]: https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-2-coding-style-guide.md
 
 Basic Usage
 ===========
@@ -10,7 +18,8 @@ Basic Usage
 Instantiating the Signal Manager
 --------------------------------
 
-First, instantiate the signal `Manager` class. The easiest way to do this is to call the `Aura.Signal/scripts/instance.php` script.
+First, instantiate the signal `Manager` class. The easiest way to do this is
+to call the `Aura.Signal/scripts/instance.php` script.
 
     <?php
     $signal = require '/path/to/Aura.Signal/scripts/instance.php';
@@ -19,7 +28,8 @@ First, instantiate the signal `Manager` class. The easiest way to do this is to 
 Adding Signal Handlers
 ----------------------
 
-Before we can send a signal to the `Manager`, we will need to add a handler for it.  To add a handler, specify:
+Before we can send a signal to the `Manager`, we will need to add a handler
+for it. To add a handler, specify:
 
 1. The class expected to be sending the signal.  This can be `'*'` for "any class", or a fully-qualified class name.
 
@@ -27,7 +37,8 @@ Before we can send a signal to the `Manager`, we will need to add a handler for 
 
 3. A closure or callback to handle the signal.
 
-For example, to add a closure that will be executed every time an object of the class `Vendor\Package\Example` sends a signal called `'example_signal'`:
+For example, to add a closure that will be executed every time an object of
+the class `Vendor\Package\Example` sends a signal called `'example_signal'`:
 
     <?php
     $signal->handler(
@@ -40,9 +51,12 @@ For example, to add a closure that will be executed every time an object of the 
 Signals By Class
 ----------------  
 
-To send a signal, the sending class must have an instance of the `Manager`.  The class should call the `send()` method with the originating object (itself), the signal being sent, and arguments to pass to the signal handler.
+To send a signal, the sending class must have an instance of the `Manager`.
+The class should call the `send()` method with the originating object
+(itself), the signal being sent, and arguments to pass to the signal handler.
 
-For example, we will define the `Vendor\Package\Example` class, and have it send a signal to the `Manager`. 
+For example, we will define the `Vendor\Package\Example` class, and have it
+send a signal to the `Manager`.
 
     <?php
     namespace Vendor\Package;
@@ -64,15 +78,21 @@ For example, we will define the `Vendor\Package\Example` class, and have it send
         }
     }
 
-Now whenever we call the `doSomething()` method, it will send the `'example_signal'` to the `Manager`, and the `Manager` will invoke the handler for that signal.
+Now whenever we call the `doSomething()` method, it will send the
+`'example_signal'` to the `Manager`, and the `Manager` will invoke the handler
+for that signal.
 
 
 Signal Inheritance
 ------------------
 
-If a class sends a signal, and no handler has been set for it, then the `Manager` will do nothing.  However, if a handler has been set for a parent class, and one of its child classes sends a signal handled for the parent, the `Manager` will handle that signal for the child as well.
+If a class sends a signal, and no handler has been set for it, then the
+`Manager` will do nothing. However, if a handler has been set for a parent
+class, and one of its child classes sends a signal handled for the parent, the
+`Manager` will handle that signal for the child as well.
 
-For example, if we have these two classes, and call `doSomethingElse()` on each of them ...
+For example, if we have these two classes, and call `doSomethingElse()` on
+each of them ...
 
     <?php
     namespace Vendor\Package;
@@ -103,13 +123,18 @@ For example, if we have these two classes, and call `doSomethingElse()` on each 
         }
     }
 
-... then the `Manager` *will* handle the signal from `ExampleChild` because its parent has a handler for it. The `Manager` *will not* handle the signal for `ExampleOther` because no handlers for it or its parents have been added to the `Manager`.
+... then the `Manager` *will* handle the signal from `ExampleChild` because
+its parent has a handler for it. The `Manager` *will not* handle the signal
+for `ExampleOther` because no handlers for it or its parents have been added
+to the `Manager`.
 
 
 Signals By Object
 -----------------
 
-It is possible to tie a handler to an object instance, so that only signals sent from that specific object will be handled.  To do so, pass the object instance as the `$sender` for the handler.
+It is possible to tie a handler to an object instance, so that only signals
+sent from that specific object will be handled. To do so, pass the object
+instance as the `$sender` for the handler.
 
     <?php
     /**
@@ -123,7 +148,10 @@ It is possible to tie a handler to an object instance, so that only signals sent
         function ($arg) { echo "$arg!!!";}
     );
 
-If that specific object instance sends the `example_signal` then the handler will be triggered, but no other instance of `ExampleChild` will trigger the handler when it sends the same signal.  This is useful for setting signal handlers from within an object that contains its own callback; for example:
+If that specific object instance sends the `example_signal` then the handler
+will be triggered, but no other instance of `ExampleChild` will trigger the
+handler when it sends the same signal. This is useful for setting signal
+handlers from within an object that contains its own callback; for example:
 
     <?php
     namespace Vendor\Package;
@@ -165,7 +193,10 @@ When `ExampleAnotherChild::action()` is called, the code:
 
 3. Sends a `'postAction'` signal to the `Manager`, which in turn calls the `postAction()` method on the object.
 
-If there are class-based handlers for `ExampleAnotherChild` class or its parents, those will also be executed.  This means we can set up combinations of handlers to be applied to classes overall, along with handlers that are tied to specific objects.
+If there are class-based handlers for `ExampleAnotherChild` class or its
+parents, those will also be executed. This means we can set up combinations of
+handlers to be applied to classes overall, along with handlers that are tied
+to specific objects.
 
 
 Advanced Usage
@@ -174,7 +205,11 @@ Advanced Usage
 Handler Position Groups
 -----------------------
 
-By default, all `Handler` objects will be appended to the `Manager` stack, and will be processed the order they were added.  Sometimes you will need a `Handler` to be processed in a different order; for example, before or after all others. If so, you can pass a `$position` value when adding a `Handler` to the `Manager`.  (The default `$position` for `Handler` objects is 5000.)
+By default, all `Handler` objects will be appended to the `Manager` stack, and
+will be processed the order they were added. Sometimes you will need a
+`Handler` to be processed in a different order; for example, before or after
+all others. If so, you can pass a `$position` value when adding a `Handler` to
+the `Manager`. (The default `$position` for `Handler` objects is 5000.)
 
     <?php
     // add a closure at position 1000, which means it will be processed
@@ -193,13 +228,15 @@ By default, all `Handler` objects will be appended to the `Manager` stack, and w
     };
     $signal->handler('Vendor\Package\ExampleChild', 'example_signal', $closure, 1000);
 
-`Handler` objects added at a position will still be appended within that position group.
+`Handler` objects added at a position will still be appended within that
+position group.
 
 
 Result Inspection
 -----------------
 
-After a signal has been sent, we can review the results returned by every handler for that signal.  
+After a signal has been sent, we can review the results returned by every
+handler for that signal.
 
     <?php
     // send a signal
@@ -215,7 +252,8 @@ After a signal has been sent, we can review the results returned by every handle
         echo $result->value;
     }
 
-The `getResults()` method returns a `ResultCollection` of `Result` objects, each of which has these properties:
+The `getResults()` method returns a `ResultCollection` of `Result` objects,
+each of which has these properties:
 
 - `$origin`: The object that sent the signal.
 
@@ -225,7 +263,8 @@ The `getResults()` method returns a `ResultCollection` of `Result` objects, each
 
 - `$value`: The value returned by the `Handler` callback.
 
-If you need only the last result, you can call `getLast()` on the `ResultCollection` object.
+If you need only the last result, you can call `getLast()` on the
+`ResultCollection` object.
 
     <?php
     // send a signal and retain the results from each Handler
@@ -241,9 +280,12 @@ If you need only the last result, you can call `getLast()` on the `ResultCollect
 Stopping Signal Processing
 --------------------------
 
-Sometimes it will be necessary to stop processing signal handlers.  If a handler callback returns the `aura\signal\Manager::STOP` constant, then no more handlers for that signal will be processed.
+Sometimes it will be necessary to stop processing signal handlers. If a
+handler callback returns the `aura\signal\Manager::STOP` constant, then no
+more handlers for that signal will be processed.
 
-First we define the handlers; note that the second one returns the `STOP` constant:
+First we define the handlers; note that the second one returns the `STOP`
+constant:
 
     <?php
     // add signal handlers
@@ -272,7 +314,10 @@ Then, from inside an object, we send a signal:
     // Or you can get via 
     // $results = $this->signal->getResults();
     
-Normally, `$results` would have three entries. In this case it has only two, because the second handler returned `\aura\signal\Manager::STOP`. As such, the third handler was never executed. You can call `ResultCollection::isStopped()` to see if the `Manager` stopped processing handlers in this way.
+Normally, `$results` would have three entries. In this case it has only two,
+because the second handler returned `\aura\signal\Manager::STOP`. As such, the
+third handler was never executed. You can call `ResultCollection::isStopped()`
+to see if the `Manager` stopped processing handlers in this way.
 
     <?php
     if ($results->isStopped()) {
@@ -285,7 +330,9 @@ Normally, `$results` would have three entries. In this case it has only two, bec
 Setting Handlers at Construction
 --------------------------------
 
-It is possible to set the `Handler` definitions for a `Manager` at construction time. This allows us to use one or more config files to define the `Handler` stack for a `Manager`.
+It is possible to set the `Handler` definitions for a `Manager` at
+construction time. This allows us to use one or more config files to define
+the `Handler` stack for a `Manager`.
 
 Given this file at `/path/to/signal_handlers.php` ...
 
@@ -324,10 +371,13 @@ Given this file at `/path/to/signal_handlers.php` ...
         $handlers
     );
 
-That is the equivalent of calling `$signal->handler()` three times to add each handler.
+That is the equivalent of calling `$signal->handler()` three times to add each
+handler.
 
 
 Thanks
 ------
 
-Thanks to Richard "Cyberlot" Thomas for the original suggestion, Galactic Void for bringing it back up, and [Matthew Weier O'Phinney](http://weierophinney.net/matthew/archives/251-Aspects,-Filters,-and-Signals,-Oh,-My!.html).
+Thanks to Richard "Cyberlot" Thomas for the original suggestion, Galactic Void
+for bringing it back up, and [Matthew Weier
+O'Phinney](http://weierophinney.net/matthew/archives/251-Aspects,-Filters,-and-Signals,-Oh,-My!.html).
