@@ -3,6 +3,8 @@
  * 
  * This file is part of the Aura Project for PHP.
  * 
+ * @package Aura.Signal
+ * 
  * @license http://opensource.org/licenses/bsd-license.php BSD
  * 
  */
@@ -17,15 +19,20 @@ namespace Aura\Signal;
  */
 class ResultCollection extends \ArrayObject
 {
-    // override to avoid problems with Forge::newInstance() throwing
-    // Fatal error: Uncaught exception 'InvalidArgumentException'
-    // with message 'Passed variable is not an array or object, using empty array instead'
-    // in ~/system/package/Aura.Di/src/Aura/Di/Forge.php on line 103
+    /**
+     * 
+     * override to avoid problems with Forge::newInstance() throwing
+     * Fatal error: Uncaught exception 'InvalidArgumentException'
+     * with message 'Passed variable is not an array or object, using 
+     * empty array instead' in 
+     * ~/system/package/Aura.Di/src/Aura/Di/Forge.php on line 103
+     * 
+     */
     public function __construct()
     {
         parent::__construct([]);
     }
-    
+
     /**
      * 
      * Returns the last Result in the collection.
@@ -40,7 +47,7 @@ class ResultCollection extends \ArrayObject
             return $this[$k - 1];
         }
     }
-    
+
     /**
      * 
      * Tells if the ResultCollection was stopped during processing.
@@ -56,3 +63,4 @@ class ResultCollection extends \ArrayObject
         }
     }
 }
+ 

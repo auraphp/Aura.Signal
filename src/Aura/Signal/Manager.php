@@ -3,6 +3,8 @@
  * 
  * This file is part of the Aura Project for PHP.
  * 
+ * @package Aura.Signal
+ * 
  * @license http://opensource.org/licenses/bsd-license.php BSD
  * 
  */
@@ -25,7 +27,7 @@ class Manager
      * 
      */
     const STOP = 'Aura\Signal\Manager::STOP';
-    
+
     /**
      * 
      * A factory to create Handler objects.
@@ -34,7 +36,7 @@ class Manager
      * 
      */
     protected $handler_factory;
-    
+
     /**
      * 
      * An array of Handler instances that respond to class signals.
@@ -43,7 +45,7 @@ class Manager
      * 
      */
     protected $handlers = [];
-    
+
     /**
      * 
      * A prototype ResultCollection; this will be cloned by `send()` to retain
@@ -53,7 +55,7 @@ class Manager
      * 
      */
     protected $result_collection;
-    
+
     /**
      * 
      * A factory to create Result objects.
@@ -62,7 +64,7 @@ class Manager
      * 
      */
     protected $result_factory;
-    
+
     /**
      * 
      * A ResultCollection from the last signal sent.
@@ -71,7 +73,7 @@ class Manager
      * 
      */
     protected $results;
-    
+
     /**
      * 
      * Have the handlers for a signal been sorted by position?
@@ -80,13 +82,15 @@ class Manager
      * 
      */
     protected $sorted = [];
-    
+
     /**
      * 
      * Constructor.
      * 
      * @param HandlerFactory $handler_factory A factory to create Handler 
      * objects.
+     * 
+     * @param ResultFactory $result_factory A factory to create Result objects.
      * 
      * @param ResultCollection $result_collection A prototype ResultCollection.
      * 
@@ -113,7 +117,7 @@ class Manager
         }
         $this->results = clone $this->result_collection;
     }
-    
+
     /**
      * 
      * Adds a Handler to respond to a sender signal.
@@ -143,7 +147,7 @@ class Manager
         $this->handlers[$signal][(int) $position][] = $handler;
         $this->sorted[$signal] = false;
     }
-    
+
     /**
      * 
      * Gets Handler instances for the Manager.
@@ -159,18 +163,18 @@ class Manager
         if (! $signal) {
             return $this->handlers;
         }
-        
+
         if (! isset($this->handlers[$signal])) {
             return;
         }
-        
+
         if (! $this->sorted[$signal]) {
             ksort($this->handlers[$signal]);
         }
-        
+
         return $this->handlers[$signal];
     }
-    
+
     /**
      * 
      * Invokes the Handler objects for a sender and signal.
@@ -189,17 +193,17 @@ class Manager
     {
         // clone a new result collection
         $this->results = clone $this->result_collection;
-        
+
         // get the arguments to be passed to the handler
         $args = func_get_args();
         array_shift($args);
         array_shift($args);
-        
+
         // now process the signal through the handlers and return the results
         $this->process($origin, $signal, $args);
         return $this->results;
     }
-    
+
     /**
      * 
      * Invokes the Handler objects for a sender and signal.
@@ -219,22 +223,22 @@ class Manager
         if (! $list) {
             return;
         }
-        
+
         // go through the handler positions for the signal
         foreach ($list as $position => $handlers) {
-            
+
             // go through each handler in this position
             foreach ($handlers as $handler) {
-                
+
                 // try the handler
                 $params = $handler->exec($origin, $signal, $args);
-                
+
                 // if it executed, it returned the params for a Result object
                 if ($params) {
-                    
+
                     // create a Result object
                     $result = $this->result_factory->newInstance($params);
-                    
+
                     // allow a meta-handler to examine the Result object,
                     // but only if it wasn't sent from the Manager (this
                     // prevents infinite looping). use process() instead
@@ -242,10 +246,10 @@ class Manager
                     if ($origin !== $this) {
                         $this->process($this, 'handler_result', [$result]);
                     }
-                    
+
                     // retain the result
                     $this->results->append($result);
-                    
+
                     // should we stop processing?
                     if ($result->value === static::STOP) {
                         // yes, leave the processing loop
@@ -255,7 +259,7 @@ class Manager
             }
         }
     }
-    
+
     /**
      * 
      * Returns the ResultCollection from the last signal processing.
@@ -268,3 +272,4 @@ class Manager
         return $this->results;
     }
 }
+ 

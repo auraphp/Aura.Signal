@@ -3,6 +3,8 @@
  * 
  * This file is part of the Aura Project for PHP.
  * 
+ * @package Aura.Signal
+ * 
  * @license http://opensource.org/licenses/bsd-license.php BSD
  * 
  */
@@ -30,7 +32,7 @@ class ResultFactory
         'signal'  => null,
         'value'   => null,
     ];
-    
+
     /**
      * 
      * Creates and returns a new Option object.
@@ -52,3 +54,4 @@ class ResultFactory
         );
     }
 }
+ 
