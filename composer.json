@@ -1,6 +1,6 @@
 {
     "name": "Aura/Signal",
-    "type": "library",
+    "type": "aura-package",
     "description": "A SignalSlots/EventHandler implementation; with it, we can invoke handlers ('slots' or 'hooks') whenever an object sends a signal ('notification' or 'event') to the signal manager.",
     "keywords": [
         "event",
