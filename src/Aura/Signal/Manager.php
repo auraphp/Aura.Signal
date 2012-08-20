@@ -139,11 +139,13 @@ class Manager
      */
     public function handler($sender, $signal, $callback, $position = 5000)
     {
-        $handler = $this->handler_factory->newInstance([
+        $handler = $this->handler_factory->newInstance(
+            [
             'sender'   => $sender,
             'signal'   => $signal,
             'callback' => $callback
-        ]);
+            ]
+        );
         $this->handlers[$signal][(int) $position][] = $handler;
         $this->sorted[$signal] = false;
     }
