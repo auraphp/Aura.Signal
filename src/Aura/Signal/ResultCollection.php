@@ -63,4 +63,3 @@ class ResultCollection extends \ArrayObject
         }
     }
 }
- 

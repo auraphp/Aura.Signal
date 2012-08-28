@@ -91,4 +91,3 @@ class Result
         return $this->$key;
     }
 }
- 

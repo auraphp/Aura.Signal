@@ -20,4 +20,3 @@ namespace Aura\Signal;
 class Exception extends \Exception
 {
 }
- 
