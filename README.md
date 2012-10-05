@@ -298,7 +298,7 @@ Stopping Signal Processing
 --------------------------
 
 Sometimes it will be necessary to stop processing signal handlers. If a
-handler callback returns the `aura\signal\Manager::STOP` constant, then no
+handler callback returns the `Aura\Signal\Manager::STOP` constant, then no
 more handlers for that signal will be processed.
 
 First we define the handlers; note that the second one returns the `STOP`
