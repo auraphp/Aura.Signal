@@ -1,1 +1,1 @@
-- PSR-1 and 2 compliance, config changes
+Changes only to config, meta, composer, and PSR compliance. No code changes.

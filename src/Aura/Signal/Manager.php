@@ -272,4 +272,3 @@ class Manager
         return $this->results;
     }
 }
- 
