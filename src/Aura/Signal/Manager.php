@@ -213,10 +213,10 @@ class Manager
      * 
      * @param string $signal The name of the signal from that origin.
      * 
-     * @param $args Arguments to pass to the Handler callback.
+     * @param array $args Arguments to pass to the Handler callback.
      * 
      */
-    protected function process($origin, $signal, $args)
+    protected function process($origin, $signal, array $args)
     {
         // are there any handlers for this signal, regardless of sender?
         $list = $this->getHandlers($signal);
