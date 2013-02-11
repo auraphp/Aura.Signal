@@ -4,7 +4,6 @@
     "description": "A SignalSlots/EventHandler implementation; with it, we can invoke handlers ('slots' or 'hooks') whenever an object sends a signal ('notification' or 'event') to the signal manager.",
     "keywords": [ "event", "event handler", "event handling", "signal", "signal slots" ],
     "homepage": "http://auraphp.github.com/Aura.Signal",
-    "version": "1.0.0-dev",
     "license": "BSD-2-Clause",
     "authors": [
         {
