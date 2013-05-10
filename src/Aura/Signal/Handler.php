@@ -98,7 +98,7 @@ class Handler
      * object, or null if the origin and signal did not match this Handler.
      * 
      */
-    public function exec($origin, $signal, $args)
+    public function exec($origin, $signal, array $args)
     {
         // match sender on a specific object, or on a class?
         if (is_object($this->sender)) {

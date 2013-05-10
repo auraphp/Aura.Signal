@@ -1,1 +1,1 @@
-Changes only to config, meta, composer, and PSR compliance. No code changes.
+- [CHG] Typo fixes and typehint additions from Akihito Koriyama.
