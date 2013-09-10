@@ -1,1 +1,2 @@
-- [CHG] Typo fixes and typehint additions from Akihito Koriyama.
+- [DOC] Add PHP 5.5 to Travis build, update LICENSE and README,
+  update docblocks.
