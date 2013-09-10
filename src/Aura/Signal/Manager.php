@@ -128,7 +128,8 @@ class Manager
      * 
      * @param string $signal The name of the signal for that sender.
      * 
-     * @param callback The callback to execute when the signal is received.
+     * @param callback $callback The callback to execute when the signal is
+     * received.
      * 
      * @param int $position The handler processing position; lower numbers are
      * processed first. Use this to force a handler to be used before or after
