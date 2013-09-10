@@ -1,1 +1,2 @@
-- [DOC] Add PHP 5.5 to Travis build, update LICENSE and README.
+- [DOC] Add PHP 5.5 to Travis build, update LICENSE and README,
+  update docblocks.
