@@ -1,7 +1,7 @@
 Aura Signal
 ===========
 
-[![Build Status](https://travis-ci.org/auraphp/Aura.Signal.png)](https://travis-ci.org/auraphp/Aura.Signal)
+[![Build Status](https://travis-ci.org/auraphp/Aura.Signal.png?branch=develop)](https://travis-ci.org/auraphp/Aura.Signal)
 
 The Aura Signal package is a SignalSlots/EventHandler implementation for PHP.
 With it, we can invoke handlers ("slots" or "hooks") whenever an object sends
