@@ -185,7 +185,7 @@ class Manager
      * 
      * @param string $signal The name of the signal from that origin.
      * 
-     * @params Arguments to pass to the Handler callback.
+     * @param Arguments to pass to the Handler callback.
      * 
      * @return ResultCollection The results from each of the Handler objects.
      * 
