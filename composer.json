@@ -1,6 +1,6 @@
 {
     "name": "aura/signal",
-    "version": "1.0.2",
+    "version": "1.0.3",
     "type": "aura-package",
     "description": "A SignalSlots/EventHandler implementation for PHP; with it, we can invoke handlers (\"slots\" or \"hooks\") whenever an object sends a signal (\"notification\" or \"event\") to the signal manager.",
     "keywords": [
@@ -11,7 +11,7 @@
         "signal slots"
     ],
     "homepage": "http://auraphp.com/Aura.Signal",
-    "time": "2013-09-10",
+    "time": "2014-05-31",
     "license": "BSD-2-Clause",
     "authors": [
         {
@@ -31,12 +31,12 @@
         {
             "name": "Akihito Koriyama",
             "email": "akihito.koriyama@gmail.com",
-            "homepage": ""
+            "homepage": "http://www.kumasystem.com"
         }
     ],
     "require": {
         "php": ">=5.4.0",
-        "aura/installer-default": ">=1.0.0"
+        "aura/installer-default": "1.0.*"
     },
     "autoload": {
         "psr-0": {
