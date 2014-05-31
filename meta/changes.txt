@@ -1,2 +1,7 @@
-- [DOC] Add PHP 5.5 to Travis build, update LICENSE and README,
-  update docblocks.
+Hygiene release.
+
+- Merge pull request #11 from harikt/v2config, adding v2 config files.
+
+- Merge pull request #9 from koriym/feature/typo, fixing a docblock typo.
+
+- Point travis status badge to develop branch
