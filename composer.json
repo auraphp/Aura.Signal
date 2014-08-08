@@ -18,7 +18,7 @@
     "autoload": {
         "psr-0": {
             "Aura\\Signal": "src/"
-        },        
+        },
         "psr-4": {
             "Aura\\Signal\\_Config\\": "config/"
         }
@@ -27,8 +27,11 @@
         "aura": {
             "type": "library",
             "config": {
-                "common": "Aura\\Signal\\_Config\\Common"                
+                "common": "Aura\\Signal\\_Config\\Common"
             }
+        },
+        "branch-alias": {
+            "dev-develop": "1.0.x-dev"
         }
     }
 }
