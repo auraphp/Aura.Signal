@@ -98,4 +98,25 @@ class HandlerTest extends \PHPUnit_Framework_TestCase
         $params = $handler->exec($origin, 'wrong_signal', ['hello']);
         $this->assertNull($params);
     }
+    
+    public function testExecOnSameString()
+    {
+        $handler = $this->newHandler('some text');
+
+        // this should be a match
+        $origin = 'some text';
+        $params = $handler->exec($origin, 'mock_signal', ['hello']);
+        $this->assertSame('hello!!!', $params['value']);
+        $this->assertSame($origin, $params['origin']);
+
+        // this should not be a match
+        $origin = 'another text';
+        $params = $handler->exec($origin, 'mock_signal', ['hello']);
+        $this->assertNull($params);
+
+        // this should not be a match
+        $origin = new \StdClass;
+        $params = $handler->exec($origin, 'mock_signal', ['hello']);
+        $this->assertNull($params);
+    }
 }
