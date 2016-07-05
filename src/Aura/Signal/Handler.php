@@ -115,6 +115,9 @@ class Handler
         // do the sender and signal match?
         if ($match_sender && $match_signal) {
             // yes, return an array of params with the callback return value
+            if (is_object($this->callback[0]) && get_class($this->callback[0]) == 'Aura\Di\LazyNew') {
+                $this->callback[0] = $this->callback[0]->__invoke();
+            }
             return [
                 'origin' => $origin,
                 'sender' => $this->sender,
