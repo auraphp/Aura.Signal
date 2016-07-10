@@ -171,6 +171,7 @@ class Manager
 
         if (! $this->sorted[$signal]) {
             ksort($this->handlers[$signal]);
+            $this->sorted[$signal] = true;
         }
 
         return $this->handlers[$signal];
