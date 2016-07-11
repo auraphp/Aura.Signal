@@ -105,8 +105,8 @@ class Handler
             // match on a specific object
             $match_sender = $this->sender === $origin;
         } else {
-            // match on a class
-            $match_sender = $this->sender == '*' || $origin instanceof $this->sender;
+            // match on a wildcard or an origin or a parent class
+            $match_sender = $this->sender == '*' || $this->sender == $origin || $origin instanceof $this->sender;
         }
 
         // match on a signal
