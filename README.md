@@ -409,4 +409,4 @@ Thanks
 
 Thanks to Richard "Cyberlot" Thomas for the original suggestion, Galactic Void
 for bringing it back up, and [Matthew Weier
-O'Phinney](http://weierophinney.net/matthew/archives/251-Aspects,-Filters,-and-Signals,-Oh,-My!.html).
+O'Phinney](https://mwop.net/blog/251-aspects-filters-and-signals-oh-my.html).
